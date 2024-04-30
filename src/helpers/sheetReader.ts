@@ -20,7 +20,7 @@ export async function readODSAndConvertToJson(odsFilePath: string, outputJsonFil
 
                         row.eachCell((cell, colNumber) => {
                             const columnName = worksheet.getRow(1).getCell(colNumber).value.toString();
-                            const cellValue = cell.value;
+                            const cellValue = cell.text;
 
                             equipment[columnName] = cellValue;
                         });
