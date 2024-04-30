@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { EquipmentsService } from '@/serviceLayer/equipments.service';
-import { controller, httpDelete, httpGet, httpPost } from 'inversify-express-utils'
+import { controller, httpDelete, httpGet, httpMethod, httpPost } from 'inversify-express-utils'
 
 @controller('/equipments')
 export class EquipmentController {
@@ -21,6 +21,12 @@ export class EquipmentController {
         return {
             data: equipment,
         }
+    }
+
+    @httpGet('/source/update')
+    async updateSource(req: Request, res: Response) {
+        const resultCode = await this._equipmentsService.updateEquipmentSource()
+        res.sendStatus(resultCode)
     }
 
     @httpPost('/')

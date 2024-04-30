@@ -15,7 +15,8 @@ export class Application extends AbstractApplication {
         const server = new InversifyExpressServer(container)
 
         server.setConfig((app) => {
-          app.use(express.json())
+          app.use(express.json());
+          app.use(express.urlencoded({ extended: true }));
         })
       
         const app = server.build()
