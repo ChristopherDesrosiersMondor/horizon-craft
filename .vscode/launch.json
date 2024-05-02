@@ -6,16 +6,7 @@
       "name": "Debug Current TS File (ts-node)",
       "request": "launch",
       "command": "docker compose up -d | yarn dev",
-      "cwd": "${fileDirname}",
-      "postDebugTask": "closingDocker"
+      "cwd": "${fileDirname}"
     },
-  ],
-  "tasks": [
-    {
-      "label": "closingDocker",
-      "type": "shell",
-      "command": "docker compose down",
-      "problemMatcher": []
-    }
   ]
 }

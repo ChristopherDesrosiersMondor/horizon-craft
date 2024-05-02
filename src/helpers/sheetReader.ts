@@ -1,5 +1,7 @@
 import * as fs from 'fs';
 import * as ExcelJS from 'exceljs';
+import { UNDEFINED, convertNameToDbSafe } from './nameConverter';
+
 
 export async function readODSAndConvertToJson(odsFilePath: string, outputJsonFilePath: string) {
     try {
@@ -19,17 +21,20 @@ export async function readODSAndConvertToJson(odsFilePath: string, outputJsonFil
                         const equipment: any = {};
 
                         row.eachCell((cell, colNumber) => {
-                            const columnName = worksheet.getRow(1).getCell(colNumber).value.toString();
-                            const cellValue = cell.text;
-
-                            equipment[columnName] = cellValue;
+                            const columnName = worksheet.getRow(1).getCell(colNumber).text;
+                            const cleanColumnName = convertNameToDbSafe(columnName)
+                            
+                            if (cleanColumnName != UNDEFINED) {
+                                const cellValue = cell.text;
+                                equipment[cleanColumnName] = cellValue;
+                            }
                         });
 
                         sheetData.push(equipment);
                     }
                 });
 
-                jsonData[`Sheet${sheetId}`] = sheetData;
+                jsonData[`${worksheet.name}`] = sheetData;
             }
         });
 

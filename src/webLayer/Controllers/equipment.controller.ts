@@ -14,6 +14,14 @@ export class EquipmentController {
         }
     }
 
+    @httpGet('/:category')
+    async indexByCategory(req: Request, res: Response) {
+        const equipments = await this._equipmentsService.allByCategory(req.params.category)
+        return {
+            data: equipments,
+        }
+    }
+
     @httpGet('/:id')
     async show(req: Request, res: Response) {
         const equipmentId = req.params.id
@@ -27,6 +35,11 @@ export class EquipmentController {
     async updateSource(req: Request, res: Response) {
         const resultCode = await this._equipmentsService.updateEquipmentSource()
         res.sendStatus(resultCode)
+    }
+
+    @httpPost('/source/seed')
+    async seedSource(req: Request, res: Response) {
+        await this._equipmentsService.seedEquipments()
     }
 
     @httpPost('/')

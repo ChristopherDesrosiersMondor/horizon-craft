@@ -3,6 +3,8 @@ import 'reflect-metadata'
 
 import './webLayer/Controllers/equipment.controller'
 import { Application } from './webLayer/Application'
+import * as path from 'path'; 
+const PROJECT_ROOT_DIR = path.resolve(__dirname, '..');
 
 console.clear()
 
@@ -11,3 +13,5 @@ export async function bootstrap() {
 }
 
 bootstrap()
+
+export { PROJECT_ROOT_DIR }

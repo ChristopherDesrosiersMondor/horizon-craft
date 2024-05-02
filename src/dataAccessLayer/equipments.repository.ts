@@ -1,5 +1,6 @@
 import { injectable } from "inversify";
 import { DBService } from "./db.service";
+import { TransformedEquipment } from "@/helpers/seedEquipment";
 
 @injectable()
 export class EquipmentsRepository {
@@ -9,16 +10,18 @@ export class EquipmentsRepository {
         return this._dbContext.equipments.find({})
     }
 
+    async allByCategory(category: string) {
+        return this._dbContext.equipments.find({
+            category: category
+        });
+    }
+
     async findOne(id: string) {
         return this._dbContext.equipments.findById(id)
     }
 
-    async create({
-        name
-    }: {
-        name: string
-    }) {
-        return this._dbContext.equipments.create({ name })
+    async create(equipment: TransformedEquipment) {
+        return this._dbContext.equipments.create(equipment)
     }
 
     async deleteOne(id: string) {
